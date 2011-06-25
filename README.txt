@@ -4,6 +4,10 @@ jQuery Resize And Crop (jrac) is a jQuery plugin that build a viewport around a
 given image permitting to visually resize an image and place a crop. Then it is
 possible to use the coordinates data to be used for any purpose.
 
+* DEMO *
+
+http://www.lacordeaucou.net/z/jrac/example/
+
 * FEATURES *
 
 - Resize and move image
