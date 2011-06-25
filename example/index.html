@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>jQuery Resize And Crop (jrac) example</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../jrac/style.jrac.css" />
+    <script type="text/javascript" src="../jrac/jquery.jrac.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />    
+    <script type="text/javascript">
+      <!--//--><![CDATA[//><!--
+      $(document).ready(function(){
+        $('.pane img').jrac({
+          'crop_width': 250,
+          'crop_left': 100,
+          'crop_top': 100,
+          'image_width': 400,
+          'viewport_onload': function() {
+            var $viewport = this;
+            var inputs = $viewport.parents('.pane').find('.coords input');
+            var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
+            for (var i=0;i<events.length;i++) {
+              var event_name = events[i];
+              $viewport.observator.register(event_name, inputs.eq(i));
+              inputs.eq(i).bind(event_name, function(event, $viewport, value) {
+                $(this).val(value);
+              }).change(event_name, function(event) {
+                  var event_name = event.data;
+                  $viewport.observator.set_property(event_name,$(this).val());
+              })
+            }
+          }
+        }).bind('viewport_events', function(event, $viewport) { // Ract on all viewport events
+          var inputs = $(this).parents('.pane').find('.coords input');
+          inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
+        });
+      });
+      //--><!]]>
+    </script>
+  </head>
+  <body>
+
+    <div>jQuery Resize and Crop (jrac) viewport</div>
+    <div class="pane clearfix">
+      <img src="images/loulou.jpg" />
+      <table class="coords">
+        <tr><td>crop x</td><td><input type="text" /></td></tr>
+        <tr><td>crop y</td><td><input type="text" /></td></tr>
+        <tr><td>crop width</td><td><input type="text" /></td></tr>
+        <tr><td>crop height</td><td><input type="text" /></td></tr>
+        <tr><td>image width</td><td><input type="text" /></td></tr>
+        <tr><td>image height</td><td><input type="text" /></td></tr>
+      </table>
+    </div>
+
+  </body>
+</html>

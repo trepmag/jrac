@@ -1,0 +1,33 @@
+/* clearfix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+/* then pane holding the image*/
+.pane>*  {
+  float:left;
+}
+.pane>table {
+  margin:1em;
+}
+.pane>table td {
+  text-align: right;
+  padding-right: .5em;
+}

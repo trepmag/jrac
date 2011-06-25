@@ -1,0 +1,27 @@
+/* jQuery Resize And Crop (jrac) */
+
+.jrac_viewport {
+  position: relative;
+  overflow: hidden;
+  border:1px solid #ccc;
+  width:640px;
+  height:480px;
+  background-image: url('images/viewport_background.gif');
+}
+
+.jrac_loading {
+  background-image: url('images/loading.gif');
+  background-repeat:no-repeat;
+  background-position:center;
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+}
+
+div.jrac_select {
+  position: absolute;
+  border: 1px solid yellow;
+}
+
+.jrac_viewport img, .jrac_select{
+  cursor: pointer;
+}
