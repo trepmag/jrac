@@ -45,6 +45,7 @@ The 'viewport_onload' property can take an function callback which interface is:
 
 The $viewport argument is div mapped jquery object that surround the taget
 image. This object get the following subsequent properties:
+
   - $viewport.$image: the target image jquery mapped
   - $viewport.$crop: the crop object.
   - $viewport.observator: an object which process all event of the viewport.
