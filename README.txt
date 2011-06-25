@@ -4,9 +4,11 @@ jQuery Resize And Crop (jrac) is a jQuery plugin that build a viewport around a
 given image permitting to visually resize an image and place a crop. Then it is
 possible to use the coordinates data to be used for any purpose.
 
+
 * DEMO *
 
 http://www.lacordeaucou.net/z/jrac/example/
+
 
 * FEATURES *
 
@@ -14,6 +16,7 @@ http://www.lacordeaucou.net/z/jrac/example/
 - Resize and move crop
 - Resize viewport
 - Aims to be integrated with any server side image processor
+
 
 * INSTRUCTIONS *
 
@@ -49,10 +52,11 @@ image. This object get the following subsequent properties:
 The main method of the $viewport.observator is 'register' which register an
 element for an event:
 
-  $viewport.observator.register(string event_name, dom element)
+  $viewport.observator.register(string event_name, dom element, callback optional onevent_callback)
 
-The observator events are the following which you can then trigger some actions
+The observator events are the following which you can then trigger some actions 
 on:
+
   crop_x
   crop_y
   crop_width
@@ -60,28 +64,17 @@ on:
   image_width
   image_height
 
+Sample:
+
+  $('img').rac({'viewport_onload', function() {
+    var $viewport = this
+    viewport.register('crop_x', $('input#cropx'), function(event_name, element, value) {
+      element.val(value)
+    }
+  }
+
 There is also an event 'viewport_events' which is triggered on every events of
 the previous decribed viewport observator.
-
-
-* Registering an element for an event *
-
-The viewport_onload callback function allow to register elements with defined
-the following events:
-- crop_x
-- crop_y
-- crop_width
-- crop_height
-- image_width
-- image_height
-
-Sample:
-$('img').rac({'viewport_onload', function() {
-  var $viewport = this
-  viewport.register('crop_x', $('input#cropx'), function(name,element,value,crop_consistent) {
-    element.val(value)
-  }
-}
 
 
 * REQUIEREMENTS *
@@ -92,7 +85,7 @@ jrac use jQuery and jQuery UI.
 - Tested with jQuery 1.4.4 and jQuery-UI 1.8.7
 
 
-* ACKNOWLEDGEMENT * 
+* ACKNOWLEDGEMENT *
 
 - The jrac/images/loading.gif come from http://www.ajaxload.info/.
 - The example picture is provided (perhaps) by courtesy of Loulou from Sos-Chats Geneve.
