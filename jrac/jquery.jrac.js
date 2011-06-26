@@ -130,13 +130,15 @@
           // Let me introduce the following Terminator's friend which handle the
           // creation of the viewport events.
           observator: {
-            items: [],
+            items: {},
             // Register a event with a given element
             register: function(event_name, element, onevent_callback) {
-              this.items[event_name] = {
-                element: element,
-                callback: onevent_callback
-              };
+              if (event_name && element) {
+                this.items[event_name] = {
+                  element: element,
+                  callback: onevent_callback
+                };
+              }
             },
             // Trigger a event and optionally supply a value
             notify: function(event_name, value) {
@@ -145,7 +147,7 @@
                 var onevent_callback = this.items[event_name].callback;
                 element.trigger(event_name,[$viewport, value]);
                 if ($.isFunction(onevent_callback)) {
-                  onevent_callback.call($viewport, event_name, this.items[event_name], value);
+                  onevent_callback.call($viewport, event_name, this.items[event_name].element, value);
                 }
               }
               $image.trigger('viewport_events',[$viewport]);
