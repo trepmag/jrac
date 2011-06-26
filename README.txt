@@ -43,20 +43,25 @@ The 'viewport_onload' property can take an function callback which interface is:
 
   function() // which the context is $viewport
 
-The $viewport argument is div mapped jquery object that surround the taget
+The $viewport argument is div jQuery wrapped elment that surround the target
 image. This object get the following subsequent properties:
 
-  - $viewport.$image: the target image jquery mapped
+  - $viewport.$image: the target image jQuery wrapped.
   - $viewport.$crop: the crop object.
   - $viewport.observator: an object which process all event of the viewport.
 
 The main method of the $viewport.observator is 'register' which register an
 element for an event:
 
-  $viewport.observator.register(string event_name, dom element, callback optional onevent_callback)
+  $viewport.observator.register(string event_name, jQuery wrapped elements[, callback onevent_callback])
+
+To unregister an event use:
+
+  $viewport.observator.unregister(string event_name)
 
 The observator events are the following which you can then trigger some actions 
-on:
+on with the jQuery bind method or by giving a function to the 
+onvevent_callback argument:
 
   crop_x
   crop_y
@@ -65,17 +70,17 @@ on:
   image_width
   image_height
 
-Sample:
+Example:
 
   $('img').rac({'viewport_onload', function() {
-    var $viewport = this
-    viewport.register('crop_x', $('input#cropx'), function(event_name, element, value) {
-      element.val(value)
+    var $viewport = this;
+    $viewport.register('crop_x', $('input#cropx'), function(event_name, element, value) {
+      element.val(value);
     }
   }
 
 There is also an event 'viewport_events' which is triggered on every events of
-the previous decribed viewport observator.
+the previous decribed viewport observator. Use jQuery bind to user it.
 
 
 * REQUIEREMENTS *
