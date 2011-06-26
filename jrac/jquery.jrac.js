@@ -131,7 +131,7 @@
           // creation of the viewport events.
           observator: {
             items: {},
-            // Register a event with a given element
+            // Register an event with a given element
             register: function(event_name, element, onevent_callback) {
               if (event_name && element) {
                 this.items[event_name] = {
@@ -139,6 +139,10 @@
                   callback: onevent_callback
                 };
               }
+            },
+            // Unregister an event
+            unregister: function(event_name) {
+              delete this.items[event_name];
             },
             // Trigger a event and optionally supply a value
             notify: function(event_name, value) {
