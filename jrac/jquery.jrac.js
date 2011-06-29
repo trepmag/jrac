@@ -217,12 +217,14 @@
                     this.notify('image_height', image_height);
                   }
                   $image.width(value);
+                  $zoom_widget.slider('value', value);
                   break;
                 case 'image_height':
                   if ($image.scale_proportion_locked) {
                     var image_width = Math.round($image.width() * value / $image.height());
                     $image.width(image_width);
                     this.notify('image_width', image_width);
+                    $zoom_widget.slider('value', image_width);
                   }
                   $image.height(value);
                   break;
