@@ -20,11 +20,12 @@ http://www.lacordeaucou.net/z/jrac/example/
 
 * INSTRUCTIONS *
 
-The 'rac' method take an optional setting object:
+The 'jrac' method implement the whole business which can take an optional 
+setting object argument:
 
-  $('img').rac();
+  $('img').jrac();
 
-The default setting is the following:
+The default setting object is the following:
 
   var settings = {
     'crop_width': 200,
@@ -43,25 +44,26 @@ The 'viewport_onload' property can take an function callback which interface is:
 
   function() // which the context is $viewport
 
-The $viewport argument is div jQuery wrapped elment that surround the target
+The $viewport argument is a div jQuery wrapped element that surround the target
 image. This object get the following subsequent properties:
 
+  - $viewport.$container: a container holding the viewport and the zoom widget.
   - $viewport.$image: the target image jQuery wrapped.
   - $viewport.$crop: the crop object.
-  - $viewport.observator: an object which process all event of the viewport.
+  - $viewport.observator: an object which process all events of the viewport.
 
 The main method of the $viewport.observator is 'register' which register an
 element for an event:
 
-  $viewport.observator.register(string event_name, jQuery wrapped elements[, callback onevent_callback])
+  $viewport.observator.register(String event_name, jQuery wrapped elements[, callback onevent_callback])
 
 To unregister an event use:
 
   $viewport.observator.unregister(string event_name)
 
 The observator events are the following which you can then trigger some actions 
-on with the jQuery bind method or by giving a function to the 
-onvevent_callback argument:
+on with the jQuery bind method or by giving a function to the onvevent_callback 
+argument:
 
   crop_x
   crop_y
@@ -80,12 +82,13 @@ Example:
   }
 
 There is also an event 'viewport_events' which is triggered on every events of
-the previous decribed viewport observator. Use jQuery bind to user it.
+the previous decribed viewport observator. Use the jQuery bind methode to act on
+it.
 
 
 * REQUIEREMENTS *
 
-jrac use jQuery and jQuery UI.
+jrac use jQuery and jQuery-UI.
 
 - Developped with jQuery 1.6.1 and jQuery-UI 1.8.13
 - Tested with jQuery 1.4.4 and jQuery-UI 1.8.7
@@ -93,8 +96,9 @@ jrac use jQuery and jQuery UI.
 
 * ACKNOWLEDGEMENT *
 
-- The jrac/images/loading.gif come from http://www.ajaxload.info/.
-- The example picture is provided (perhaps) by courtesy of Loulou from Sos-Chats Geneve.
+- The jrac/images/loading.gif image file come from http://www.ajaxload.info/.
+- The picture used in the example is provided (perhaps) by courtesy of Loulou 
+from Sos-Chats Geneve.
 
 
 * CHANGELOG *
