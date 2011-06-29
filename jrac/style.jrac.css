@@ -1,5 +1,7 @@
 /* jQuery Resize And Crop (jrac) */
 
+.jrac_container {}
+
 .jrac_viewport {
   position: relative;
   overflow: hidden;
@@ -17,11 +19,11 @@
   top:0;left:0;right:0;bottom:0;
 }
 
-div.jrac_select {
+.jrac_crop {
   position: absolute;
   border: 1px solid yellow;
 }
 
-.jrac_viewport img, .jrac_select{
+.jrac_viewport img, .jrac_crop {
   cursor: pointer;
 }

@@ -16,12 +16,13 @@
       $(document).ready(function(){
         $('.pane img').jrac({
           'crop_width': 250,
+          'crop_height': 120,
           'crop_left': 100,
           'crop_top': 100,
           'image_width': 400,
           'viewport_onload': function() {
             var $viewport = this;
-            var inputs = $viewport.parents('.pane').find('.coords input');
+            var inputs = $viewport.$container.parent('.pane').find('.coords input');
             var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
             for (var i=0;i<events.length;i++) {
               var event_name = events[i];
@@ -34,7 +35,7 @@
               })
             }
           }
-        }).bind('viewport_events', function(event, $viewport) { // Ract on all viewport events
+        }).bind('viewport_events', function(event, $viewport) { // React on all viewport events
           var inputs = $(this).parents('.pane').find('.coords input');
           inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
         });
