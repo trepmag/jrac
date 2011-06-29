@@ -48,32 +48,43 @@
       // Wait on image load to build the next processes
       $('<img>').attr('src', $image.attr('src')).load(function(){
 
-        // Save the original image size
-        var image_width = $image.width();
-        var image_height = $image.height();
+        // Add some custom properties to $image
+        $.extend($image, {
+          scale_proportion_locked: true,
+          originalWidth: $image.width(),
+          orignalHeight: $image.height()
+        });
 
         // Set given optional image size
         $image.width(settings.image_width).height(settings.image_height);
 
         // Create the zoom widget which permit to resize the image
-        var zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
+        var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
         .width($viewport.width())
         .slider({
           value: $image.width(),
           min: settings.zoom_min,
           max: settings.zoom_max,
+          start: function(event, ui) {
+            $.extend($zoom_widget,{
+              on_start_width_value: ui.value,
+              on_start_height_value: $image.height()
+            })
+          },
           slide: function(event, ui) {
-            $image.width(ui.value+"px");
+            var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
+            $image.height(height);
+            $image.width(ui.value);
+            $viewport.observator.notify('image_height', height);
             $viewport.observator.notify('image_width', ui.value);
-            $viewport.observator.notify('image_height', $image.height());
           }
         });
-        $container.append(zoom_widget);
+        $container.append($zoom_widget);
 
         // Make the viewport resizeable
         $viewport.resizable({
           resize: function(event, ui) {
-            zoom_widget.width(ui.size.width);
+            $zoom_widget.width(ui.size.width);
           }
         });
 
@@ -200,9 +211,19 @@
                   $crop.height(value);
                   break;
                 case 'image_width':
+                  if ($image.scale_proportion_locked) {
+                    var image_height = Math.round($image.height() * value / $image.width());
+                    $image.height(image_height);
+                    this.notify('image_height', image_height);
+                  }
                   $image.width(value);
                   break;
                 case 'image_height':
+                  if ($image.scale_proportion_locked) {
+                    var image_width = Math.round($image.width() * value / $image.height());
+                    $image.width(image_width);
+                    this.notify('image_width', image_width);
+                  }
                   $image.height(value);
                   break;
               }

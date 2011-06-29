@@ -22,7 +22,7 @@
           'image_width': 400,
           'viewport_onload': function() {
             var $viewport = this;
-            var inputs = $viewport.$container.parent('.pane').find('.coords input');
+            var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
             var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
             for (var i=0;i<events.length;i++) {
               var event_name = events[i];
@@ -30,6 +30,7 @@
               inputs.eq(i).bind(event_name, function(event, $viewport, value) {
                 $(this).val(value);
               }).change(event_name, function(event) {
+                  $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked')
                   var event_name = event.data;
                   $viewport.observator.set_property(event_name,$(this).val());
               })
@@ -55,6 +56,7 @@
         <tr><td>crop height</td><td><input type="text" /></td></tr>
         <tr><td>image width</td><td><input type="text" /></td></tr>
         <tr><td>image height</td><td><input type="text" /></td></tr>
+        <tr><td>lock proportion</td><td><input type="checkbox" checked="checked" /></td></tr>
       </table>
     </div>
 
