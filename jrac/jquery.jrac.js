@@ -182,7 +182,11 @@
             },
             // Return crop y position relative to $image
             crop_position_y: function() {
-              return $crop.position().top - $image.position().top;
+              // The following Math.ceil() is a quick fix with an issue where 
+              // firefox return some float value (e.g 100.00001525878906) for 
+              // the top crop position.
+              var crop_position_top = Math.ceil($crop.position().top);
+              return crop_position_top - $image.position().top;
             },
             // Does the crop is completely inside the image?
             crop_consistent: function() {
