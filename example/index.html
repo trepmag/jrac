@@ -3,17 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>jQuery Resize And Crop (jrac) example</title>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.js"></script>
+    
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+    
+    <!-- jQuery-Ui -->
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.js"></script>
-
+    
+    <!-- SHJS - Syntax Highlighting for JavaScript -->
+    <script type="text/javascript" src="http://shjs.sourceforge.net/sh_main.min.js"></script>
+    <script type="text/javascript" src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://shjs.sourceforge.net/sh_style.css" />
+    <script type="text/javascript">$(document).ready(function(){sh_highlightDocument();});</script>
+    
+    <!-- jrac - jQuery Resize And Crop -->
     <link rel="stylesheet" type="text/css" href="../jrac/style.jrac.css" />
     <script type="text/javascript" src="../jrac/jquery.jrac.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css" />    
+    <!-- This page business -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript">
       <!--//--><![CDATA[//><!--
       $(document).ready(function(){
+        // Apply jrac on some image.
         $('.pane img').jrac({
           'crop_width': 250,
           'crop_height': 120,
@@ -24,19 +37,26 @@
             var $viewport = this;
             var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
             var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
-            for (var i=0;i<events.length;i++) {
+            for (var i = 0; i < events.length; i++) {
               var event_name = events[i];
+              // Register an event with an element.
               $viewport.observator.register(event_name, inputs.eq(i));
+              // Attach a handler to that event for the element.
               inputs.eq(i).bind(event_name, function(event, $viewport, value) {
                 $(this).val(value);
-              }).change(event_name, function(event) {
-                  $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked')
-                  var event_name = event.data;
-                  $viewport.observator.set_property(event_name,$(this).val());
+              })
+              // Attach a handler for the built-in jQuery change event, handler
+              // which read user input and apply it to relevent viewport object.
+              .change(event_name, function(event) {
+                var event_name = event.data;
+                $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked');
+                $viewport.observator.set_property(event_name,$(this).val());
               })
             }
           }
-        }).bind('viewport_events', function(event, $viewport) { // React on all viewport events
+        })
+        // React on all viewport events.
+        .bind('viewport_events', function(event, $viewport) {
           var inputs = $(this).parents('.pane').find('.coords input');
           inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
         });
@@ -46,7 +66,11 @@
   </head>
   <body>
 
-    <div>jQuery Resize and Crop (jrac) viewport</div>
+    <h1>jQuery Resize and Crop (jrac)</h1>
+    <p>jQuery Resize And Crop (jrac) is a jQuery plugin that build a viewport around a
+given image permitting to visually resize an image and place a crop. Then it is
+possible to use the coordinates data to be used for any purpose.</p>
+    <h2>Demo</h2>
     <div class="pane clearfix">
       <img src="images/loulou.jpg" />
       <table class="coords">
@@ -59,6 +83,47 @@
         <tr><td>lock proportion</td><td><input type="checkbox" checked="checked" /></td></tr>
       </table>
     </div>
+
+    <h2>Code</h2>
+    <p>Here is the code use in this page. You can find some documentation in the <a href="../README.txt">README.txt file</a>.</p>
+    <pre class="code sh_javascript">
+$(document).ready(function(){
+  // Apply jrac on some image.
+  $('.pane img').jrac({
+    'crop_width': 250,
+    'crop_height': 120,
+    'crop_left': 100,
+    'crop_top': 100,
+    'image_width': 400,
+    'viewport_onload': function() {
+      var $viewport = this;
+      var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
+      var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
+      for (var i = 0; i < events.length; i++) {
+        var event_name = events[i];
+        // Register an event with an element.
+        $viewport.observator.register(event_name, inputs.eq(i));
+        // Attach a handler to that event for the element.
+        inputs.eq(i).bind(event_name, function(event, $viewport, value) {
+          $(this).val(value);
+        })
+        // Attach a handler for the built-in jQuery change event, handler
+        // which read user input and apply it to relevent viewport object.
+        .change(event_name, function(event) {
+          var event_name = event.data;
+          $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked');
+          $viewport.observator.set_property(event_name,$(this).val());
+        })
+      }
+    }
+  })
+  // React on all viewport events.
+  .bind('viewport_events', function(event, $viewport) {
+    var inputs = $(this).parents('.pane').find('.coords input');
+    inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
+  });
+});
+    </pre>
 
   </body>
 </html>

@@ -31,3 +31,9 @@ html[xmlns] .clearfix {
   text-align: right;
   padding-right: .5em;
 }
+pre.code {
+  padding:1em;
+  margin:0;
+  background-color: #eee;
+  border:1px dashed #ccc;
+}

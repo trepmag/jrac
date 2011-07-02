@@ -99,6 +99,8 @@ jrac use jQuery and jQuery-UI.
 - The jrac/images/loading.gif image file come from http://www.ajaxload.info/.
 - The picture used in the example is provided (perhaps) by courtesy of Loulou 
 from Sos-Chats Geneve.
+- Syntax Highlighting in JavaScript (SHJS) used for the display of the code in 
+the example, http://shjs.sourceforge.net/.
 
 
 * CHANGELOG *
