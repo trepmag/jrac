@@ -123,10 +123,10 @@
             containment: $viewport,
             resize: function(event, ui) {
               if (ui.size.width != ui.originalSize.width) {
-                $viewport.observator.notify('crop_width', ui.size.width);
+                $viewport.observator.notify('crop_width', $crop.width());
               }
               if (ui.size.height != ui.originalSize.height) {
-                $viewport.observator.notify('crop_height', ui.size.height);
+                $viewport.observator.notify('crop_height', $crop.height());
               }
             }
           })
