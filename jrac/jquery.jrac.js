@@ -156,7 +156,7 @@
             unregister: function(event_name) {
               delete this.items[event_name];
             },
-            // Trigger a event and optionally supply a value
+            // Trigger an event and optionally supply a value
             notify: function(event_name, value) {
               if (this.items[event_name]) {
                 var element = this.items[event_name].element;
@@ -184,7 +184,7 @@
             crop_position_y: function() {
               // The following Math.ceil() is a quick fix with an issue where 
               // firefox return some float value (e.g 100.00001525878906) for 
-              // the top crop position.
+              // some top position.
               return Math.ceil($crop.position().top - $image.position().top);
             },
             // Does the crop is completely inside the image?
