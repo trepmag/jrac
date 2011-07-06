@@ -1,26 +1,33 @@
 /* clearfix */
 .clearfix:after {
-	content: ".";
-	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
-	height: 0;
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
 }
 
 .clearfix {
-	display: inline-block;
+  display: inline-block;
 }
 
 html[xmlns] .clearfix {
-	display: block;
+  display: block;
 }
 
 * html .clearfix {
-	height: 1%;
+  height: 1%;
 }
 
-/* then pane holding the image*/
+body {
+  font-family: Georgia,Times,"Times New Roman",serif;
+  font-size: .9em;
+  margin: 1em auto;
+  width:900px;
+}
+
+/* The pane holding the image */
 .pane>*  {
   float:left;
 }
@@ -36,4 +43,10 @@ pre.code {
   margin:0;
   background-color: #eee;
   border:1px dashed #ccc;
+}
+
+/* Override some jrac css */
+.jrac_viewport {
+  width:440px;
+  height:330px;
 }
