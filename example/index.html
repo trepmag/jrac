@@ -51,8 +51,11 @@
                 var event_name = event.data;
                 $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked');
                 $viewport.observator.set_property(event_name,$(this).val());
-              })
+              });
             }
+            $viewport.$container.append('<div>Image natual size: '
+              +$viewport.$image.originalWidth+' x '
+              +$viewport.$image.originalHeight+'</div>')
           }
         })
         // React on all viewport events.

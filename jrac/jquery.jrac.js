@@ -52,7 +52,7 @@
         $.extend($image, {
           scale_proportion_locked: true,
           originalWidth: $image.width(),
-          orignalHeight: $image.height()
+          originalHeight: $image.height()
         });
 
         // Set given optional image size
