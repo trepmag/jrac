@@ -182,8 +182,8 @@
             },
             // Return crop y position relative to $image
             crop_position_y: function() {
-              // The following Math.ceil() is a quick fix with an issue where 
-              // firefox return some float value (e.g 100.00001525878906) for 
+              // The following Math.ceil() is a quick fix with an issue where
+              // firefox return some float value (e.g 100.00001525878906) for
               // some top position.
               return Math.ceil($crop.position().top - $image.position().top);
             },
@@ -242,14 +242,13 @@
           settings.viewport_onload.call($viewport);
           $viewport.observator.notify_all();
         }
+
+        // Hide the loading notice
+        $loading.hide();
+
+        // Finally display the image
+        $image.show();
       });
-
-      // Hide the loading notice
-      $loading.hide();
-
-      // Finally display the image
-      $image.show();
-
-    })
+    });
   };
 })( jQuery );
