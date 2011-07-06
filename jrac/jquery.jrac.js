@@ -101,7 +101,7 @@
         });
 
         // Build the crop element
-        var $crop = $('<div class="jrac_crop" />')
+        var $crop = $('<div class="jrac_crop"><div class="jrac_crop_drag_handler"></div></div>')
         .css({
           'width': settings.crop_width,
           'height': settings.crop_height,
@@ -109,6 +109,7 @@
           'top':settings.crop_top
         }).draggable({
           containment: $viewport,
+          handle: 'div.jrac_crop_drag_handler',
           drag: function(event, ui) {
             if (ui.position.left != ui.originalPosition.left) {
               $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());

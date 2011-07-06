@@ -24,6 +24,15 @@
   border: 1px solid yellow;
 }
 
-.jrac_viewport img, .jrac_crop {
+.jrac_crop_drag_handler {
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  background-color: #fff;
+  opacity: .1; /* FX/Opera/Safari/Chrome */
+  -ms-filter: "alpha(opacity=10)"; /* IE8 */
+  filter: alpha(opacity = 10); /* IE6/IE7 */
+}
+
+.jrac_viewport img, .jrac_crop_drag_handler {
   cursor: pointer;
 }
