@@ -12,8 +12,10 @@
     var settings = {
       'crop_width': 200,
       'crop_height': 100,
-      'crop_left': 0,
-      'crop_top': 0,
+      // The two following properties define the crop position (relative to the
+      // image).
+      'crop_x': 0,
+      'crop_y': 0,
       'crop_resize': true,
       'image_width': null,
       'image_height': null,
@@ -114,8 +116,8 @@
         .css({
           'width': settings.crop_width,
           'height': settings.crop_height,
-          'left':settings.crop_left+settings.viewport_content_left,
-          'top':settings.crop_top+settings.viewport_content_top
+          'left':settings.crop_x+settings.viewport_content_left,
+          'top':settings.crop_y+settings.viewport_content_top
         }).draggable({
           containment: $viewport,
           handle: 'div.jrac_crop_drag_handler',

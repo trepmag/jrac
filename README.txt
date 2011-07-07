@@ -30,8 +30,10 @@ The default setting object is the following:
   var settings = {
     'crop_width': 200,
     'crop_height': 100,
-    'crop_left': 0,
-    'crop_top': 0,
+    // The two following properties define the crop position (relative to the 
+    // image).
+    'crop_x': 0,
+    'crop_y': 0,
     'crop_resize': true,
     'image_width': null,
     'image_height': null,
@@ -107,6 +109,7 @@ jrac use jQuery and jQuery-UI.
 from Sos-Chats Geneve.
 - Syntax Highlighting in JavaScript (SHJS) used for the display of the code in 
 the example, http://shjs.sourceforge.net/.
+
 
 * DOWNLOAD *
 
