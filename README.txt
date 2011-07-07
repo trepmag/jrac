@@ -37,6 +37,12 @@ The default setting object is the following:
     'image_height': null,
     'zoom_min': 100,
     'zoom_max': 3000,
+    // The two following properties allow to position the content (negative 
+    // value allowed). It can be use to focus the viewport on the cropped 
+    // part of the image. 
+    'viewport_content_x': 0,
+    'viewport_content_y': 0,
+    // Submit here a callback function (context is the viewport), see below.
     'viewport_onload': null
   };
 

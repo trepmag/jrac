@@ -19,6 +19,12 @@
       'image_height': null,
       'zoom_min': 100,
       'zoom_max': 3000,
+      // The two following properties allow to position the content (negative 
+      // value allowed). It can be use to focus the viewport on the cropped 
+      // part of the image. 
+      'viewport_content_left': 0,
+      'viewport_content_top': 0,
+      // Submit here a callback function (context is the viewport).
       'viewport_onload': null
     };
 
@@ -57,6 +63,9 @@
 
         // Set given optional image size
         $image.width(settings.image_width).height(settings.image_height);
+        
+        // Set the viewport content position for the image
+        $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
         // Create the zoom widget which permit to resize the image
         var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
@@ -105,8 +114,8 @@
         .css({
           'width': settings.crop_width,
           'height': settings.crop_height,
-          'left':settings.crop_left,
-          'top':settings.crop_top
+          'left':settings.crop_left+settings.viewport_content_left,
+          'top':settings.crop_top+settings.viewport_content_top
         }).draggable({
           containment: $viewport,
           handle: 'div.jrac_crop_drag_handler',
@@ -233,19 +242,19 @@
               this.notify(that, value);
             }
           }
-        })
-
-        // Trigger the viewport_onload callback
-        if ($.isFunction(settings.viewport_onload)) {
-          settings.viewport_onload.call($viewport);
-          $viewport.observator.notify_all();
-        }
+        });        
 
         // Hide the loading notice
         $loading.hide();
 
         // Finally display the image
         $image.show();
+        
+        // Trigger the viewport_onload callback
+        if ($.isFunction(settings.viewport_onload)) {
+          settings.viewport_onload.call($viewport);
+          $viewport.observator.notify_all();
+        }
       });
     });
   };
