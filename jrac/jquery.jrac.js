@@ -106,7 +106,7 @@
             if (ui.position.left != ui.originalPosition.left) {
               $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
             }
-            if (ui.position.left != ui.originalPosition.left) {
+            if (ui.position.top != ui.originalPosition.top) {
               $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
             }
           }
@@ -126,7 +126,7 @@
             if (ui.position.left != ui.originalPosition.left) {
               $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
             }
-            if (ui.position.left != ui.originalPosition.left) {
+            if (ui.position.top != ui.originalPosition.top) {
               $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
             }
           }
