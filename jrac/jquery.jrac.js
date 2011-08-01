@@ -17,6 +17,7 @@
       'crop_x': 0,
       'crop_y': 0,
       'crop_resize': true,
+      'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
       'zoom_min': 100,
@@ -105,7 +106,7 @@
             if (ui.position.left != ui.originalPosition.left) {
               $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
             }
-            if (ui.position.left != ui.originalPosition.left) {
+            if (ui.position.top != ui.originalPosition.top) {
               $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
             }
           }
@@ -125,7 +126,7 @@
             if (ui.position.left != ui.originalPosition.left) {
               $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
             }
-            if (ui.position.left != ui.originalPosition.left) {
+            if (ui.position.top != ui.originalPosition.top) {
               $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
             }
           }
@@ -133,6 +134,7 @@
         if (settings.crop_resize) {
           $crop.resizable({
             containment: $viewport,
+            aspectRatio: settings.crop_aspect_ratio,
             resize: function(event, ui) {
               if (ui.size.width != ui.originalSize.width) {
                 $viewport.observator.notify('crop_width', $crop.width());
