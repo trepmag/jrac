@@ -22,6 +22,7 @@
       'image_height': null,
       'zoom_min': 100,
       'zoom_max': 3000,
+      'viewport_resize': true,
       // The two following properties allow to position the content (negative 
       // value allowed). It can be use to focus the viewport on the cropped 
       // part of the image. 
@@ -94,11 +95,13 @@
         $container.append($zoom_widget);
 
         // Make the viewport resizeable
-        $viewport.resizable({
-          resize: function(event, ui) {
-            $zoom_widget.width(ui.size.width);
-          }
-        });
+        if (settings.viewport_resize) {
+          $viewport.resizable({
+            resize: function(event, ui) {
+              $zoom_widget.width(ui.size.width);
+            }
+          });
+        }
 
         // Enable the image draggable interaction
         $image.draggable({
