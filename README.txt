@@ -39,6 +39,7 @@ The default setting object is the following:
     'image_height': null,
     'zoom_min': 100,
     'zoom_max': 3000,
+    'viewport_resize': true,
     // The two following properties allow to position the content (negative 
     // value allowed). It can be use to focus the viewport on the cropped 
     // part of the image. 
@@ -52,7 +53,7 @@ The 'viewport_onload' property can take an function callback which interface is:
 
   function() // which the context is $viewport
 
-The $viewport argument is a div jQuery wrapped element that surround the target
+The $viewport context is a div jQuery wrapped element that surround the target
 image. This object get the following subsequent properties:
 
   - $viewport.$container: a container holding the viewport and the zoom widget.
@@ -114,9 +115,3 @@ the example, http://shjs.sourceforge.net/.
 * DOWNLOAD *
 
 https://github.com/trepmag/jrac
-
-
-* CHANGELOG *
-
-** Version 1.0-beta1 - 25 jun 2011
-Initial release
