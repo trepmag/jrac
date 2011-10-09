@@ -54,8 +54,8 @@
       var $loading = $('<div class="jrac_loading" />');
       $viewport.append($loading);
 
-      // Wait on image load to build the next processes
-      $('<img>').attr('src', $image.attr('src')).load(function(){
+      // Wait on image load to build the next processes  
+      $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(function(){
 
         // Add some custom properties to $image
         $.extend($image, {
