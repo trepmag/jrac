@@ -15,12 +15,20 @@
       // image).
       'crop_x': 0,
       'crop_y': 0,
+      'crop_drag': true,
       'crop_resize': true,
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
+      'image_max_width': null,
+      'image_max_width': null,
+      'image_resize': true,
+      'image_onresize': function(e, ui) {},
+      'image_x': 0,
+      'image_y': 0,
       'zoom_min': 100,
       'zoom_max': 3000,
+      'zoom_widget': false,
       'viewport_resize': true,
       // The two following properties allow to position the content (negative 
       // value allowed). It can be use to focus the viewport on the cropped 
@@ -54,8 +62,7 @@
       var $loading = $('<div class="jrac_loading" />');
       $viewport.append($loading);
 
-      // Wait on image load to build the next processes  
-      $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(function(){
+      var _jrac = function(){
 
         // Add some custom properties to $image
         $.extend($image, {
@@ -70,69 +77,96 @@
         // Set the viewport content position for the image
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
-        // Create the zoom widget which permit to resize the image
-        var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
-        .width($viewport.width())
-        .slider({
-          value: $image.width(),
-          min: settings.zoom_min,
-          max: settings.zoom_max,
-          start: function(event, ui) {
-            $.extend($zoom_widget,{
-              on_start_width_value: ui.value,
-              on_start_height_value: $image.height()
-            })
-          },
-          slide: function(event, ui) {
-            var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
-            $image.height(height);
-            $image.width(ui.value);
-            $viewport.observator.notify('image_height', height);
-            $viewport.observator.notify('image_width', ui.value);
-          }
-        });
-        $container.append($zoom_widget);
+        if (settings.zoom_widget) {
+          // Create the zoom widget which permit to resize the image
+          var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
+          .width($viewport.width())
+          .slider({
+            value: $image.width(),
+            min: settings.zoom_min,
+            max: settings.zoom_max,
+            start: function(event, ui) {
+              $.extend($zoom_widget,{
+                on_start_width_value: ui.value,
+                on_start_height_value: $image.height()
+              })
+            },
+            slide: function(event, ui) {
+              var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
+              $image.height(height);
+              $image.width(ui.value);
+              $viewport.observator.notify('image_height', height);
+              $viewport.observator.notify('image_width', ui.value);
+            }
+          });
+          $container.append($zoom_widget);
+        }
 
         // Make the viewport resizeable
         if (settings.viewport_resize) {
           $viewport.resizable({
             resize: function(event, ui) {
-              $zoom_widget.width(ui.size.width);
+              if (settings.zoom_widget) {
+                $zoom_widget.width(ui.size.width);
+              }
             }
           });
         }
 
+        // Enable the image resize interaction
+        if (settings.image_resize)
+        {
+          $image
+            .resizable({
+                maxWidth: settings.image_max_width,
+                maxHeight: settings.image_max_height,
+                resize: settings.image_onresize,
+                aspectRatio: true
+            });
+        }
+
         // Enable the image draggable interaction
-        $image.draggable({
-          drag: function(event, ui) {
-            if (ui.position.left != ui.originalPosition.left) {
-              $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+        var $elem = settings.image_resize ? $image.parent('.ui-wrapper') : $image;
+        
+        $elem
+          .css({
+            'left': settings.image_x+settings.viewport_content_left,
+            'top': settings.image_y+settings.viewport_content_top,
+          })
+          .draggable({
+            drag: function(event, ui) {
+              if (ui.position.left != ui.originalPosition.left) {
+                $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+              }
+              if (ui.position.top != ui.originalPosition.top) {
+                $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
+              }
             }
-            if (ui.position.top != ui.originalPosition.top) {
-              $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
-            }
-          }
-        });
+          });
 
         // Build the crop element
-        var $crop = $('<div class="jrac_crop"><div class="jrac_crop_drag_handler"></div></div>')
-        .css({
-          'width': settings.crop_width,
-          'height': settings.crop_height,
-          'left':settings.crop_x+settings.viewport_content_left,
-          'top':settings.crop_y+settings.viewport_content_top
-        }).draggable({
-          containment: $viewport,
-          handle: 'div.jrac_crop_drag_handler',
-          drag: function(event, ui) {
-            if (ui.position.left != ui.originalPosition.left) {
-              $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+        var $crop = $('<div class="jrac_crop"><div class="jrac_crop_drag_handler"></div></div>').css({
+                        'width': settings.crop_width,
+                        'height': settings.crop_height,
+                        'left':settings.crop_x+settings.viewport_content_left,
+                        'top':settings.crop_y+settings.viewport_content_top
+                      });
+        
+        if (settings.crop_drag) {
+          $crop.draggable({
+            containment: $viewport,
+            handle: 'div.jrac_crop_drag_handler',
+            drag: function(event, ui) {
+              if (ui.position.left != ui.originalPosition.left) {
+                $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+              }
+              if (ui.position.top != ui.originalPosition.top) {
+                $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
+              }
             }
-            if (ui.position.top != ui.originalPosition.top) {
-              $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
-            }
-          }
-        });
+          });
+        }
+
         if (settings.crop_resize) {
           $crop.resizable({
             containment: $viewport,
@@ -233,14 +267,18 @@
                     this.notify('image_height', image_height);
                   }
                   $image.width(value);
-                  $zoom_widget.slider('value', value);
+                  if (settings.zoom_widget) {
+                    $zoom_widget.slider('value', value);
+                  }
                   break;
                 case 'image_height':
                   if ($image.scale_proportion_locked) {
                     var image_width = Math.round($image.width() * value / $image.height());
                     $image.width(image_width);
                     this.notify('image_width', image_width);
-                    $zoom_widget.slider('value', image_width);
+                    if (settings.zoom_widget) {
+                      $zoom_widget.slider('value', image_width);
+                    }
                   }
                   $image.height(value);
                   break;
@@ -261,7 +299,16 @@
           settings.viewport_onload.call($viewport);
           $viewport.observator.notify_all();
         }
-      });
+      };
+
+      // Wait on image load to build the next processes  
+      var src = $image.attr('src');
+      if (/^data:image/.test(src)) {
+         _jrac();
+      }
+      else {
+        $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(_jrac);
+      }
     });
   };
 })( jQuery );
