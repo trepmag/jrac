@@ -20,6 +20,10 @@
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
+      'image_resize': true,
+      'image_onresize': function(e, ui) {},
+      'image_x': 0,
+      'image_y': 0,
       'zoom_min': 100,
       'zoom_max': 3000,
       'viewport_resize': true,
@@ -102,17 +106,34 @@
           });
         }
 
+        // Enable the image resize interaction
+        if (settings.image_resize)
+        {
+          $image
+            .resizable({
+                resize: settings.image_onresize,
+                aspectRatio: true
+            });
+        }
+
         // Enable the image draggable interaction
-        $image.draggable({
-          drag: function(event, ui) {
-            if (ui.position.left != ui.originalPosition.left) {
-              $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+        var $elem = settings.image_resize ? $image.parent('.ui-wrapper') : $image;
+        
+        $elem
+          .css({
+            'left': settings.image_x+settings.viewport_content_left,
+            'top': settings.image_y+settings.viewport_content_top,
+          })
+          .draggable({
+            drag: function(event, ui) {
+              if (ui.position.left != ui.originalPosition.left) {
+                $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+              }
+              if (ui.position.top != ui.originalPosition.top) {
+                $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
+              }
             }
-            if (ui.position.top != ui.originalPosition.top) {
-              $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
-            }
-          }
-        });
+          });
 
         // Build the crop element
         var $crop = $('<div class="jrac_crop"><div class="jrac_crop_drag_handler"></div></div>').css({
