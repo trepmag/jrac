@@ -54,8 +54,7 @@
       var $loading = $('<div class="jrac_loading" />');
       $viewport.append($loading);
 
-      // Wait on image load to build the next processes  
-      $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(function(){
+      var _jrac = function(){
 
         // Add some custom properties to $image
         $.extend($image, {
@@ -261,7 +260,16 @@
           settings.viewport_onload.call($viewport);
           $viewport.observator.notify_all();
         }
-      });
+      };
+
+      // Wait on image load to build the next processes  
+      var src = $image.attr('src');
+      if (/^data:image/.test(src)) {
+         _jrac();
+      }
+      else {
+        $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(_jrac);
+      }
     });
   };
 })( jQuery );
