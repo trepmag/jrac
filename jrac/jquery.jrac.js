@@ -22,9 +22,9 @@
       'zoom_min': 100,
       'zoom_max': 3000,
       'viewport_resize': true,
-      // The two following properties allow to position the content (negative 
-      // value allowed). It can be use to focus the viewport on the cropped 
-      // part of the image. 
+      // The two following properties allow to position the content (negative
+      // value allowed). It can be use to focus the viewport on the cropped
+      // part of the image.
       'viewport_content_left': 0,
       'viewport_content_top': 0,
       // Submit here a callback function (context is the viewport).
@@ -54,8 +54,9 @@
       var $loading = $('<div class="jrac_loading" />');
       $viewport.append($loading);
 
-      // Wait on image load to build the next processes  
-      $('<img>').attr('src', $image.attr('src') + ($image.attr('src').search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime()).load(function(){
+      // The following procedure hold business intend to be run once the image
+      // is loaded (load event).
+      var image_load_handler = function(){
 
         // Add some custom properties to $image
         $.extend($image, {
@@ -66,7 +67,7 @@
 
         // Set given optional image size
         $image.width(settings.image_width).height(settings.image_height);
-        
+
         // Set the viewport content position for the image
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
@@ -248,20 +249,32 @@
               this.notify(that, value);
             }
           }
-        });        
+        });
 
         // Hide the loading notice
         $loading.hide();
 
         // Finally display the image
         $image.show();
-        
+
         // Trigger the viewport_onload callback
         if ($.isFunction(settings.viewport_onload)) {
           settings.viewport_onload.call($viewport);
           $viewport.observator.notify_all();
         }
-      });
+      };
+
+      // When an image is using an src image "data" URL scheme then it appear 
+      // that the image load event never get fired. Then fire directly
+      // image_load_handler() in that case.
+      var src = $image.attr('src');
+      if (/^data:image/.test(src)) {
+         image_load_handler();
+      }
+      else {
+        src = src + (src.search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime();
+        $('<img>').attr('src', src).load(image_load_handler);
+      }
     });
   };
 })( jQuery );
