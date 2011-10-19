@@ -20,6 +20,8 @@
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
+      'image_max_width': null,
+      'image_max_width': null,
       'image_resize': true,
       'image_onresize': function(e, ui) {},
       'image_x': 0,
@@ -116,6 +118,8 @@
         {
           $image
             .resizable({
+                maxWidth: settings.image_max_width,
+                maxHeight: settings.image_max_height,
                 resize: settings.image_onresize,
                 aspectRatio: true
             });
