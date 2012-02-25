@@ -28,7 +28,8 @@
       'viewport_content_left': 0,
       'viewport_content_top': 0,
       // Submit here a callback function (context is the viewport).
-      'viewport_onload': null
+      'viewport_onload': null,
+      'unload': false // if true unload jrac if previously run on a item.
     };
 
     // Apply the resize and crop tools to each images
@@ -49,6 +50,20 @@
       var jrac_loaded = false;      
       if ($image.parent().hasClass('jrac_viewport')) {
         jrac_loaded = true;        
+      }
+      
+      // Unload jrac if asked
+      if (jrac_loaded && settings.unload) {
+        $image.draggable("destroy");
+        $image.parent().find('.jrac_crop').remove();
+        $image.parent().parent().find('.jrac_zoom_slider').remove();
+        $image.parent().unwrap(); // remove container
+        $image.unwrap(); // remove viewport     
+      }
+
+      // Do nothing more if unload asked
+      if (settings.unload) {
+        return;
       }
       
       // Prepare image
