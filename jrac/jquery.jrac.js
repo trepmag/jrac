@@ -156,6 +156,7 @@
           $container: $container,
           $image: $image,
           $crop: $crop,
+          $zoom_widget: $zoom_widget,
           // Let me introduce the following Terminator's friend which handle the
           // creation of the viewport events.
           observator: {
