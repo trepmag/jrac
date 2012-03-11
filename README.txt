@@ -94,7 +94,7 @@ There is also an event 'viewport_events' which is triggered on every events of
 the previous decribed viewport observator. Use the jQuery bind methode to act on
 it.
 
-Destroy jrac is done by running jrac with the 'destroy' argument:
+Destroy jrac (not much tested) is done by running jrac with the 'destroy' argument:
 
   $('img').jrac('destroy');
 
