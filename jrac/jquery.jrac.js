@@ -71,8 +71,8 @@
         $image.data('original', $image.clone());
       }
 
-      // Do nothing more if unload asked
-      if (settings.unload) {
+      // Do nothing more if destroy is asked
+      if (destroy) {
         return;
       }
       
