@@ -83,7 +83,7 @@ argument:
 
 Example:
 
-  $('img').rac({'viewport_onload', function() {
+  $('img').jrac({'viewport_onload', function() {
     var $viewport = this;
     $viewport.register('crop_x', $('input#cropx'), function(event_name, element, value) {
       element.val(value);
