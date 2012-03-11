@@ -44,7 +44,7 @@
         $.extend( settings, options );
       }
       
-      var $image = $(this);
+      var $image = $(this);      
       
       // Test if jrac was previously run
       var jrac_loaded = false;      
@@ -52,13 +52,20 @@
         jrac_loaded = true;        
       }
       
-      // Unload jrac if asked
       if (jrac_loaded && settings.unload) {
+        // Unload jrac if asked
         $image.draggable("destroy");
         $image.parent().find('.jrac_crop').remove();
         $image.parent().parent().find('.jrac_zoom_slider').remove();
+        $image.parent().append($image.data('original')); // restore original image
         $image.parent().unwrap(); // remove container
-        $image.unwrap(); // remove viewport     
+        $image.unwrap(); // remove viewport
+        $image.remove(); // remove image which was altered (in its css attributes)
+      }
+      else {
+        // Record image before some of its attributes get altered by some 
+        // jrac css or some user size or proportion changes.
+        $image.data('original', $image.clone());
       }
 
       // Do nothing more if unload asked
