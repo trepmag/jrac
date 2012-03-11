@@ -28,8 +28,7 @@
       'viewport_content_left': 0,
       'viewport_content_top': 0,
       // Submit here a callback function (context is the viewport).
-      'viewport_onload': null,
-      'unload': false // if true unload jrac if previously run on a item.
+      'viewport_onload': null
     };
 
     // Apply the resize and crop tools to each images
@@ -40,8 +39,12 @@
       }
 
       // Read options
-      if ( options ) {
+      var destroy = false;
+      if ( typeof(options) == 'object' ) {
         $.extend( settings, options );
+      }
+      else if (options == 'destroy') {
+        destroy = true;
       }
       
       var $image = $(this);      
@@ -52,7 +55,7 @@
         jrac_loaded = true;        
       }
       
-      if (jrac_loaded && settings.unload) {
+      if (jrac_loaded && destroy) {
         // Unload jrac if asked
         $image.draggable("destroy");
         $image.parent().find('.jrac_crop').remove();
