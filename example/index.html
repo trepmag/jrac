@@ -36,7 +36,7 @@
           'viewport_onload': function() {
             var $viewport = this;
             var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
-            var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
+            var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height'];
             for (var i = 0; i < events.length; i++) {
               var event_name = events[i];
               // Register an event with an element.
@@ -59,7 +59,7 @@
           }
         })
         // React on all viewport events.
-        .bind('viewport_events', function(event, $viewport) {
+        .bind('jrac_events', function(event, $viewport) {
           var inputs = $(this).parents('.pane').find('.coords input');
           inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
         });
@@ -102,7 +102,7 @@ $(document).ready(function(){
     'viewport_onload': function() {
       var $viewport = this;
       var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
-      var events = ['crop_x','crop_y','crop_width','crop_height','image_width','image_height'];
+      var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height'];
       for (var i = 0; i < events.length; i++) {
         var event_name = events[i];
         // Register an event with an element.
@@ -122,7 +122,7 @@ $(document).ready(function(){
     }
   })
   // React on all viewport events.
-  .bind('viewport_events', function(event, $viewport) {
+  .bind('jrac_events', function(event, $viewport) {
     var inputs = $(this).parents('.pane').find('.coords input');
     inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
   });

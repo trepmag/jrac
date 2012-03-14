@@ -74,23 +74,23 @@ The observator events are the following which you can then trigger some actions
 on with the jQuery bind method or by giving a function to the onvevent_callback 
 argument:
 
-  crop_x
-  crop_y
-  crop_width
-  crop_height
-  image_width
-  image_height
+  jrac_crop_x
+  jrac_crop_y
+  jrac_crop_width
+  jrac_crop_height
+  jrac_image_width
+  jrac_image_height
 
 Example:
 
   $('img').jrac({'viewport_onload', function() {
     var $viewport = this;
-    $viewport.register('crop_x', $('input#cropx'), function(event_name, element, value) {
+    $viewport.register('jrac_crop_x', $('input#cropx'), function(event_name, element, value) {
       element.val(value);
     }
   }
 
-There is also an event 'viewport_events' which is triggered on every events of
+There is also an event 'jrac_events' which is triggered on every events of
 the previous decribed viewport observator. Use the jQuery bind methode to act on
 it.
 

@@ -124,8 +124,8 @@
               var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
               $image.height(height);
               $image.width(ui.value);
-              $viewport.observator.notify('image_height', height);
-              $viewport.observator.notify('image_width', ui.value);
+              $viewport.observator.notify('jrac_image_height', height);
+              $viewport.observator.notify('jrac_image_width', ui.value);
             }
           });
           $container.append($zoom_widget);
@@ -143,10 +143,10 @@
           $image.draggable({
             drag: function(event, ui) {
               if (ui.position.left != ui.originalPosition.left) {
-                $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+                $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
               }
               if (ui.position.top != ui.originalPosition.top) {
-                $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
+                $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
               }
             }
           });
@@ -163,10 +163,10 @@
             handle: 'div.jrac_crop_drag_handler',
             drag: function(event, ui) {
               if (ui.position.left != ui.originalPosition.left) {
-                $viewport.observator.notify('crop_x', $viewport.observator.crop_position_x());
+                $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
               }
               if (ui.position.top != ui.originalPosition.top) {
-                $viewport.observator.notify('crop_y', $viewport.observator.crop_position_y());
+                $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
               }
             }
           });
@@ -176,10 +176,10 @@
               aspectRatio: settings.crop_aspect_ratio,
               resize: function(event, ui) {
                 if (ui.size.width != ui.originalSize.width) {
-                  $viewport.observator.notify('crop_width', $crop.width());
+                  $viewport.observator.notify('jrac_crop_width', $crop.width());
                 }
                 if (ui.size.height != ui.originalSize.height) {
-                  $viewport.observator.notify('crop_height', $crop.height());
+                  $viewport.observator.notify('jrac_crop_height', $crop.height());
                 }
               }
             })
@@ -221,15 +221,15 @@
                   onevent_callback.call($viewport, event_name, element, value);
                 }
               }
-              $image.trigger('viewport_events',[$viewport]);
+              $image.trigger('jrac_events',[$viewport]);
             },
             notify_all: function() {
-              this.notify('crop_x', this.crop_position_x());
-              this.notify('crop_y', this.crop_position_y());
-              this.notify('crop_width', $crop.width());
-              this.notify('crop_height', $crop.height());
-              this.notify('image_width', $image.width());
-              this.notify('image_height', $image.height());
+              this.notify('jrac_crop_x', this.crop_position_x());
+              this.notify('jrac_crop_y', this.crop_position_y());
+              this.notify('jrac_crop_width', $crop.width());
+              this.notify('jrac_crop_height', $crop.height());
+              this.notify('jrac_image_width', $image.width());
+              this.notify('jrac_image_height', $image.height());
             },
             // Return crop x position relative to $image
             crop_position_x: function() {
@@ -253,32 +253,32 @@
                 return;
               }
               switch (that) {
-                case 'crop_x':
+                case 'jrac_crop_x':
                   $crop.css('left',value + $image.position().left);
                   break;
-                case 'crop_y':
+                case 'jrac_crop_y':
                   $crop.css('top',value + $image.position().top);
                   break;
-                case 'crop_width':
+                case 'jrac_crop_width':
                   $crop.width(value);
                   break;
-                case 'crop_height':
+                case 'jrac_crop_height':
                   $crop.height(value);
                   break;
-                case 'image_width':
+                case 'jrac_image_width':
                   if ($image.scale_proportion_locked) {
                     var image_height = Math.round($image.height() * value / $image.width());
                     $image.height(image_height);
-                    this.notify('image_height', image_height);
+                    this.notify('jrac_image_height', image_height);
                   }
                   $image.width(value);
                   $zoom_widget.slider('value', value);
                   break;
-                case 'image_height':
+                case 'jrac_image_height':
                   if ($image.scale_proportion_locked) {
                     var image_width = Math.round($image.width() * value / $image.height());
                     $image.width(image_width);
-                    this.notify('image_width', image_width);
+                    this.notify('jrac_image_width', image_width);
                     $zoom_widget.slider('value', image_width);
                   }
                   $image.height(value);
