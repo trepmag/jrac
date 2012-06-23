@@ -39,6 +39,7 @@ The default setting object is the following:
     'image_height': null,
     'zoom_min': 100,
     'zoom_max': 3000,
+    'viewport_image_surrounding': false, // Set the viewport to surround the image on load
     'viewport_resize': true,
     // The two following properties allow to position the content (negative 
     // value allowed). It can be use to focus the viewport on the cropped 
