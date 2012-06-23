@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.js"></script>
     
+    <!-- jQueryRotate -->
+    <script type="text/javascript" src="http://jqueryrotate.googlecode.com/files/jQueryRotateCompressed.2.2.js"></script>
+    
     <!-- SHJS - Syntax Highlighting for JavaScript -->
     <script type="text/javascript" src="http://shjs.sourceforge.net/sh_main.min.js"></script>
     <script type="text/javascript" src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"></script>
@@ -36,7 +39,7 @@
           'viewport_onload': function() {
             var $viewport = this;
             var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
-            var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height'];
+            var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height', 'jrac_image_rotate'];
             for (var i = 0; i < events.length; i++) {
               var event_name = events[i];
               // Register an event with an element.
@@ -84,6 +87,7 @@ possible to use the coordinates data to be used for any purpose.</p>
         <tr><td>crop height</td><td><input type="text" /></td></tr>
         <tr><td>image width</td><td><input type="text" /></td></tr>
         <tr><td>image height</td><td><input type="text" /></td></tr>
+        <tr><td>image angle</td><td><input type="text" /></td></tr>
         <tr><td>lock proportion</td><td><input type="checkbox" checked="checked" /></td></tr>
       </table>
     </div>
@@ -102,7 +106,7 @@ $(document).ready(function(){
     'viewport_onload': function() {
       var $viewport = this;
       var inputs = $viewport.$container.parent('.pane').find('.coords input:text');
-      var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height'];
+      var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height', 'jrac_image_rotate'];
       for (var i = 0; i < events.length; i++) {
         var event_name = events[i];
         // Register an event with an element.

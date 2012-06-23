@@ -19,6 +19,7 @@
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
+      'image_angle': 0,
       'zoom_min': 100,
       'zoom_max': 3000,
       'viewport_image_surrounding': false, // Set the viewport to surround the image on load
@@ -105,6 +106,15 @@
 
         // Set given optional image size
         $image.width(settings.image_width).height(settings.image_height);
+        
+        // Set given optional image angle
+        if ($().rotate) {
+          $image.rotate(settings.image_angle);
+          // Record the angle as I dont know if rotate plugin have a getter to return the current angle
+          $.extend($image, {
+            angle: settings.image_angle
+          });
+        }
 
         // Apply the viewport image surrounding is asked
         if (settings.viewport_image_surrounding) {
@@ -117,8 +127,30 @@
         // Set the viewport content position for the image
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
-        // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
+          
+          // Create the rotate widget which will be a vertical slider on the right of the viewport
+          if ($().rotate) { // Check rotate plugin dependance
+            var $rotate_widget = $('<div class="jrac_rotate_slider"><div class="ui-slider-handle"></div></div>')
+            .height($viewport.height())
+            .slider({
+              orientation: "vertical",
+              value: $image.angle + 180, // initial angle
+              min: 0,
+              max: 360,
+              slide: function(event, ui) {
+                var angle = (ui.value - 180) * -1;
+                $image.rotate(angle);
+                $image.angle = angle;
+                $viewport.observator.notify('jrac_image_rotate', angle);
+              }
+            })
+            .css('display', 'inline-block');
+            $viewport.css('display', 'inline-block');
+            $container.append($rotate_widget);
+          }
+
+          // Create the zoom widget which permit to resize the image
           var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
           .width($viewport.width())
           .slider({
@@ -140,7 +172,7 @@
             }
           });
           $container.append($zoom_widget);
-        
+          
           // Make the viewport resizeable
           if (settings.viewport_resize) {
             $viewport.resizable({
@@ -241,6 +273,7 @@
               this.notify('jrac_crop_height', $crop.height());
               this.notify('jrac_image_width', $image.width());
               this.notify('jrac_image_height', $image.height());
+              this.notify('jrac_image_rotate', $image.angle);
             },
             // Return crop x position relative to $image
             crop_position_x: function() {
@@ -293,6 +326,12 @@
                     $zoom_widget.slider('value', image_width);
                   }
                   $image.height(value);
+                  break;
+                case 'jrac_image_rotate':
+                  if ($().rotate) {
+                    $image.rotate(value);
+                    $image.angle = value;
+                  }
                   break;
               }
               this.notify(that, value);

@@ -11,6 +11,10 @@
   background-image: url('images/viewport_background.gif');
 }
 
+.jrac_rotate_slider{
+/*  width: 14px;*/
+}
+
 .jrac_loading {
   background-image: url('images/loading.gif');
   background-repeat:no-repeat;

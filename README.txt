@@ -37,6 +37,7 @@ The default setting object is the following:
     'crop_resize': true,
     'image_width': null,
     'image_height': null,
+    'image_angle': 0,
     'zoom_min': 100,
     'zoom_max': 3000,
     'viewport_image_surrounding': false, // Set the viewport to surround the image on load
@@ -83,6 +84,7 @@ argument:
   jrac_crop_height
   jrac_image_width
   jrac_image_height
+  jrac_image_rotate
 
 Example:
 
@@ -108,6 +110,7 @@ jrac use jQuery and jQuery-UI.
 
 - Developped with jQuery 1.6.1 and jQuery-UI 1.8.13
 - Tested with jQuery 1.4.4 and jQuery-UI 1.8.7
+- Optional jQueryRotate jqueryrotate plugin (tested with v2.2)
 
 
 * ACKNOWLEDGEMENT *
