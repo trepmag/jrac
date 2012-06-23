@@ -22,6 +22,8 @@
       'zoom_min': 100,
       'zoom_max': 3000,
       'viewport_image_surrounding': false, // Set the viewport to surround the image on load
+      'viewport_width': null,
+      'viewport_height': null,
       'viewport_resize': true,
       // The two following properties allow to position the content (negative
       // value allowed). It can be use to focus the viewport on the cropped
@@ -107,6 +109,9 @@
         // Apply the viewport image surrounding is asked
         if (settings.viewport_image_surrounding) {
           $viewport.width($image.width()).height($image.height());
+        }
+        else {
+          $viewport.width(settings.viewport_width).height(settings.viewport_height);
         }
 
         // Set the viewport content position for the image
