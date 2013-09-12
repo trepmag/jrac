@@ -21,6 +21,7 @@
       'image_height': null,
       'zoom_min': 100,
       'zoom_max': 3000,
+      'zoom_label': '',
       'viewport_image_surrounding': false, // Set the viewport to surround the image on load
       'viewport_width': null,
       'viewport_height': null,
@@ -124,7 +125,6 @@
               $container.append($zoom_label);
           }
           var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
-          .width($viewport.width())
           .slider({
             value: $image.width(),
             min: settings.zoom_min,

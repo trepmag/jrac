@@ -11,7 +11,7 @@
   width:640px;
   height:480px;
   background-image: url('images/viewport_background.gif');
-  border: dashed 5px black;
+  border: dashed 5px #999;
 }
 
 .jrac_loading {
@@ -24,7 +24,7 @@
 
 .jrac_crop {
   position: absolute;
-  border: 2px solid green;
+  border: 2px solid yellow;
 }
 
 .jrac_crop_drag_handler {
