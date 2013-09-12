@@ -1,6 +1,8 @@
 /* jQuery Resize And Crop (jrac) */
 
-.jrac_container {}
+.jrac_container {
+    margin-bottom: 1em;
+}
 
 .jrac_viewport {
   position: relative;
@@ -9,6 +11,7 @@
   width:640px;
   height:480px;
   background-image: url('images/viewport_background.gif');
+  border: dashed 5px black;
 }
 
 .jrac_loading {
@@ -21,7 +24,7 @@
 
 .jrac_crop {
   position: absolute;
-  border: 1px solid yellow;
+  border: 2px solid green;
 }
 
 .jrac_crop_drag_handler {
@@ -35,4 +38,8 @@
 
 .jrac_viewport img, .jrac_crop_drag_handler {
   cursor: pointer;
+}
+
+.jrac_zoom_slider_label {
+    margin-top: .5em;
 }

@@ -49,15 +49,15 @@
       else if (options == 'destroy') {
         destroy = true;
       }
-      
-      var $image = $(this);      
-      
+
+      var $image = $(this);
+
       // Test if jrac was previously run
-      var jrac_loaded = false;      
+      var jrac_loaded = false;
       if ($image.parent().hasClass('jrac_viewport')) {
-        jrac_loaded = true;        
+        jrac_loaded = true;
       }
-      
+
       if (jrac_loaded && destroy) {
         // Unload jrac if asked
         $image.draggable("destroy");
@@ -69,7 +69,7 @@
         $image.remove(); // remove image which was altered (in its css attributes)
       }
       else {
-        // Record image before some of its attributes get altered by some 
+        // Record image before some of its attributes get altered by some
         // jrac css or some user size or proportion changes.
         $image.data('original', $image.clone());
       }
@@ -78,7 +78,7 @@
       if (destroy) {
         return;
       }
-      
+
       // Prepare image
       if (!jrac_loaded) {
         $image.hide().css('position','absolute').wrap('<div class="jrac_container"><div class="jrac_viewport"></div></div>');
@@ -119,6 +119,10 @@
 
         // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
+          if (settings.zoom_label) {
+              var $zoom_label = $('<div class="jrac_zoom_slider_label">'+settings.zoom_label+'</div>');
+              $container.append($zoom_label);
+          }
           var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
           .width($viewport.width())
           .slider({
@@ -140,7 +144,7 @@
             }
           });
           $container.append($zoom_widget);
-        
+
           // Make the viewport resizeable
           if (settings.viewport_resize) {
             $viewport.resizable({
@@ -253,8 +257,8 @@
             // Does the crop is completely inside the image?
             crop_consistent: function() {
               return this.crop_position_x()>=0 && this.crop_position_y()>=0
-              && this.crop_position_x() + $crop.width()<=$image.width()
-              && this.crop_position_y() + $crop.height()<=$image.height();
+              && this.crop_position_x() + $crop.width() + parseInt($crop.css('border-width'),10)*2  <=$image.width()
+              && this.crop_position_y() + $crop.height() + parseInt($crop.css('border-width'),10)*2 <=$image.height();
             },
             // Set a property (which his name is one of the event) with a given
             // value then notify this operation
@@ -314,7 +318,7 @@
         }
       };
 
-      // When an image is using an src image "data" URL scheme then it appear 
+      // When an image is using an src image "data" URL scheme then it appear
       // that the image load event never get fired. Then fire directly
       // image_load_handler() in that case.
       var src = $image.attr('src');
