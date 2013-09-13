@@ -147,11 +147,7 @@
 
           // Make the viewport resizeable
           if (settings.viewport_resize) {
-            $viewport.resizable({
-              resize: function(event, ui) {
-                $zoom_widget.width(ui.size.width);
-              }
-            });
+            $viewport.resizable();
           }
 
           // Enable the image draggable interaction
