@@ -56,25 +56,25 @@ The 'viewport_onload' property can take an function callback which interface is:
 
   function() // which the context is $viewport
 
-The $viewport context is a div jQuery wrapped element that surround the target
-image. This object get the following subsequent properties:
+The $viewport context is a div jQuery wrapped element that surrounds the target
+image. This object has the following subsequent properties:
 
   - $viewport.$container: a container holding the viewport and the zoom widget.
-  - $viewport.$image: the target image jQuery wrapped.
+  - $viewport.$image: the target image, jQuery-wrapped.
   - $viewport.$crop: the crop object.
-  - $viewport.observator: an object which process all events of the viewport.
+  - $viewport.observator: an object which processes all events of the viewport.
 
-The main method of the $viewport.observator is 'register' which register an
+The main method of the $viewport.observator is 'register' which registers an
 element for an event:
 
   $viewport.observator.register(String event_name, jQuery wrapped elements[, callback onevent_callback])
 
-To unregister an event use:
+To unregister an event, use:
 
   $viewport.observator.unregister(string event_name)
 
 The observator events are the following which you can then trigger some actions 
-on with the jQuery bind method or by giving a function to the onvevent_callback 
+on with the jQuery bind method or by giving a function to the onevent_callback 
 argument:
 
   jrac_crop_x
@@ -94,7 +94,7 @@ Example:
   }
 
 There is also an event 'jrac_events' which is triggered on every events of
-the previous decribed viewport observator. Use the jQuery bind methode to act on
+the previous decribed viewport observator. Use the jQuery bind method to act on
 it.
 
 Destroy jrac (not much tested) is done by running jrac with the 'destroy' argument:
@@ -102,7 +102,7 @@ Destroy jrac (not much tested) is done by running jrac with the 'destroy' argume
   $('img').jrac('destroy');
 
 
-* REQUIEREMENTS *
+* REQUIREMENTS *
 
 jrac use jQuery and jQuery-UI.
 
