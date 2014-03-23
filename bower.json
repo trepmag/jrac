@@ -1,0 +1,24 @@
+{
+  "name": "jrac",
+  "version": "1.0.0",
+  "homepage": "https://github.com/trepmag/jrac",
+  "authors": [
+    "Cedric Gampert <cgampert@gmail.com>"
+  ],
+  "description": "jQuery Resize And Crop (jrac) is a jQuery plugin that build a viewport around a given image permitting to visually resize an image and place a crop",
+  "main": "jrac/jquery.jrac.js",
+  "keywords": [
+    "resize",
+    "crop",
+    "jquery",
+    "plugin"
+  ],
+  "license": "GPLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
