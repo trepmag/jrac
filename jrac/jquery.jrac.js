@@ -1,4 +1,4 @@
-/* jQuery Resize And Crop (jrac)
+/* jQuery Resize And Crop (jrac) v1.0.1
  * A jQuery 1.4+ and jQueryUi 1.8+ plugin under GNU GENERAL PUBLIC LICENSE version 2 lisense.
  * Copyright (c) 2011 Cedric Gampert - cgampert@gmail.com
  */
