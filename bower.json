@@ -1,6 +1,6 @@
 {
   "name": "jrac",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/trepmag/jrac",
   "authors": [
     "Cedric Gampert <cgampert@gmail.com>"
@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": ">= 1.6.1",
-    "jquery.ui": ">= 1.8.13"
+    "jquery": ">= 1.4.4",
+    "jquery-ui": ">= 1.8.7"
   }
 }

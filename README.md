@@ -112,13 +112,6 @@ Destroy jrac (not much tested) is done by running jrac with the `destroy` argume
   $('img').jrac('destroy');
 ```
 
-## REQUIREMENTS
-
-jrac use jQuery and jQuery-UI.
-
-- Developped with jQuery 1.6.1 and jQuery-UI 1.8.13
-- Tested with jQuery 1.4.4 and jQuery-UI 1.8.7
-
 
 ## ACKNOWLEDGEMENT
 
