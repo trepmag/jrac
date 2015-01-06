@@ -111,7 +111,9 @@ Destroy jrac (not much tested) is done by running jrac with the `destroy` argume
 ```javascript
   $('img').jrac('destroy');
 ```
+## LICENSE
 
+All jrac code is released under the GNU General Public License. See COPYRIGHT.txt and LICENSE.txt.
 
 ## ACKNOWLEDGEMENT
 
