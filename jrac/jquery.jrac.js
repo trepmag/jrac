@@ -259,8 +259,8 @@
             // Does the crop is completely inside the image?
             crop_consistent: function() {
               return this.crop_position_x()>=0 && this.crop_position_y()>=0
-              && this.crop_position_x() + $crop.width() + parseInt($crop.css('border-width'),10)*2  <=$image.width()
-              && this.crop_position_y() + $crop.height() + parseInt($crop.css('border-width'),10)*2 <=$image.height();
+              && this.crop_position_x() + $crop.width() + parseInt($crop.css('border-left-width'),10) + parseInt($crop.css('border-right-width'),10)  <=$image.width()
+              && this.crop_position_y() + $crop.height() + parseInt($crop.css('border-top-width'),10) + parseInt($crop.css('border-bottom-width'),10) <=$image.height();
             },
             // Set a property (which his name is one of the event) with a given
             // value then notify this operation
