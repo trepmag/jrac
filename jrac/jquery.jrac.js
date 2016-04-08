@@ -1,9 +1,9 @@
 /*
  * jQuery Resize And Crop (jrac) 1.0.2
- * 
+ *
  * A jquery+jquery-ui plugin under GNU GENERAL PUBLIC LICENSE version 2 lisense.
  * Copyright (c) 2011 Cedric Gampert - cgampert@gmail.com
- * 
+ *
  * Dependencies:
  *  jquery 1.4.4
  *  jquery-ui 1.8.7 (draggable, resizable, slider)
@@ -25,8 +25,8 @@
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
-      'zoom_min': 100,
-      'zoom_max': 3000,
+      'zoom_min': 100, // this regards the min/max width of the image on screen
+      'zoom_max': 3000, // All position arguments use the zoom_max as the position of truth
       'zoom_label': '',
       'viewport_image_surrounding': false, // Set the viewport to surround the image on load
       'viewport_width': null,
@@ -107,7 +107,9 @@
         $.extend($image, {
           scale_proportion_locked: true,
           originalWidth: $image.width(),
-          originalHeight: $image.height()
+          originalHeight: $image.height(),
+          anchorX: settings.viewport_content_left,  //these represent our source coordinates,
+          anchorY: settings.viewport_content_top
         });
 
         // Set given optional image size
@@ -141,6 +143,7 @@
                 on_start_height_value: $image.height()
               })
             },
+            // Model:  Represents absolute position of image, with image size,
             slide: function(event, ui) {
               var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
               $image.height(height);
