@@ -26,8 +26,8 @@
       'crop_aspect_ratio': null,
       'image_width': null,
       'image_height': null,
-      'zoom_min': 100, // this regards the min/max width of the image on screen
-      'zoom_max': 3000, // All position arguments use the zoom_max as the position of truth
+      'zoom_min': 100,
+      'zoom_max': 3000,
       'zoom_label': '',
       'viewport_image_surrounding': false, // Set the viewport to surround the image on load
       'viewport_width': null,
@@ -127,7 +127,6 @@
         // Set the viewport content position for the image
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
-
         //A bunch of variables for dynamic resizing
          var scaleLeft = $image.width() / settings.zoom_max
          var scaleTop = scaleLeft *  $image.zoom_ratio
@@ -145,7 +144,6 @@
             value: $image.width(),
             min: settings.zoom_min,
             max: settings.zoom_max,
-            // Model:  Represents absolute position of image, with image size,
             slide: function(event, ui) {
               var height = Math.round($image.zoom_ratio * ui.value);
               $image.height(height);
@@ -171,10 +169,8 @@
             drag: function(event, ui) {
               $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
               $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
-
               offsetLeft = (ui.position.left - $viewport.width() / 2) / scaleLeft
               offsetTop = (ui.position.top  - $viewport.height() / 2) / scaleTop
-
             }
           });
 
