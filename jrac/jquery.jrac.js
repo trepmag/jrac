@@ -130,8 +130,8 @@
         //A bunch of variables for dynamic resizing
          var scaleLeft = $image.width() / settings.zoom_max;
          var scaleTop = scaleLeft *  $image.zoom_ratio;
-         var offsetLeft = Math.round(- $viewport.width() / 2 / scaleLeft);
-         var offsetTop = Math.round(- $viewport.height() / 2 / scaleTop);
+         var offsetLeft = Math.round((settings.viewport_content_left - $viewport.width()) / 2 / scaleLeft);
+         var offsetTop = Math.round((settings.viewport_content_top - $viewport.height()) / 2 / scaleTop);
 
         // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
