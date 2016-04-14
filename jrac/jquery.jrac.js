@@ -1,9 +1,10 @@
 /*
  * jQuery Resize And Crop (jrac) 1.0.2
- * 
+ *
  * A jquery+jquery-ui plugin under GNU GENERAL PUBLIC LICENSE version 2 lisense.
  * Copyright (c) 2011 Cedric Gampert - cgampert@gmail.com
- * 
+ * Modified in 2016 by David McInnis - davidm@eagles.ewu.edu
+ *
  * Dependencies:
  *  jquery 1.4.4
  *  jquery-ui 1.8.7 (draggable, resizable, slider)
@@ -101,13 +102,15 @@
 
       // The following procedure hold business intend to be run once the image
       // is loaded (load event).
+
+
+
       var image_load_handler = function(){
 
         // Add some custom properties to $image
         $.extend($image, {
           scale_proportion_locked: true,
-          originalWidth: $image.width(),
-          originalHeight: $image.height()
+          zoom_ratio: $image.height() / $image.width(),
         });
 
         // Set given optional image size
@@ -124,6 +127,12 @@
         // Set the viewport content position for the image
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
+        //A bunch of variables for dynamic resizing
+         var scaleLeft = $image.width() / settings.zoom_max;
+         var scaleTop = scaleLeft *  $image.zoom_ratio;
+         var offsetLeft = Math.round((settings.viewport_content_left - $viewport.width()) / 2 / scaleLeft);
+         var offsetTop = Math.round((settings.viewport_content_top - $viewport.height()) / 2 / scaleTop);
+
         // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
           if (settings.zoom_label) {
@@ -135,16 +144,15 @@
             value: $image.width(),
             min: settings.zoom_min,
             max: settings.zoom_max,
-            start: function(event, ui) {
-              $.extend($zoom_widget,{
-                on_start_width_value: ui.value,
-                on_start_height_value: $image.height()
-              })
-            },
             slide: function(event, ui) {
-              var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
+              var height = Math.round($image.zoom_ratio * ui.value);
               $image.height(height);
               $image.width(ui.value);
+              scaleLeft =  ui.value / settings.zoom_max;
+              scaleTop = scaleLeft * $image.zoom_ratio;
+              var newLeft = Math.round(offsetLeft * scaleLeft +  $viewport.width() / 2);
+              var newTop = Math.round(offsetTop * scaleTop + $viewport.height() / 2);
+              $image.css({'left': newLeft, 'top': newTop});
               $viewport.observator.notify('jrac_image_height', height);
               $viewport.observator.notify('jrac_image_width', ui.value);
             }
@@ -159,12 +167,10 @@
           // Enable the image draggable interaction
           $image.draggable({
             drag: function(event, ui) {
-              if (ui.position.left != ui.originalPosition.left) {
-                $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
-              }
-              if (ui.position.top != ui.originalPosition.top) {
-                $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
-              }
+              $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
+              $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
+              offsetLeft = Math.round((ui.position.left - $viewport.width() / 2) / scaleLeft);
+              offsetTop = Math.round((ui.position.top  - $viewport.height() / 2) / scaleTop);
             }
           });
 
