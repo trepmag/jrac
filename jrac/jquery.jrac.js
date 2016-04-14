@@ -128,10 +128,10 @@
         $image.css({'left': settings.viewport_content_left, 'top': settings.viewport_content_top});
 
         //A bunch of variables for dynamic resizing
-         var scaleLeft = $image.width() / settings.zoom_max
-         var scaleTop = scaleLeft *  $image.zoom_ratio
-         var offsetLeft = (settings.viewport_content_left - $viewport.width() / 2) / scaleLeft
-         var offsetTop = (settings.viewport_content_top - $viewport.height() / 2) / scaleTop
+         var scaleLeft = $image.width() / settings.zoom_max;
+         var scaleTop = scaleLeft *  $image.zoom_ratio;
+         var offsetLeft = Math.round(- $viewport.width() / 2 / scaleLeft);
+         var offsetTop = Math.round(- $viewport.height() / 2 / scaleTop);
 
         // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
@@ -148,10 +148,10 @@
               var height = Math.round($image.zoom_ratio * ui.value);
               $image.height(height);
               $image.width(ui.value);
-              scaleLeft =  ui.value / settings.zoom_max
-              scaleTop = scaleLeft * $image.zoom_ratio
-              var newLeft = offsetLeft * scaleLeft +  $viewport.width() / 2
-              var newTop = offsetTop * scaleTop + $viewport.height() / 2
+              scaleLeft =  ui.value / settings.zoom_max;
+              scaleTop = scaleLeft * $image.zoom_ratio;
+              var newLeft = Math.round(offsetLeft * scaleLeft +  $viewport.width() / 2);
+              var newTop = Math.round(offsetTop * scaleTop + $viewport.height() / 2);
               $image.css({'left': newLeft, 'top': newTop});
               $viewport.observator.notify('jrac_image_height', height);
               $viewport.observator.notify('jrac_image_width', ui.value);
@@ -169,8 +169,8 @@
             drag: function(event, ui) {
               $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
               $viewport.observator.notify('jrac_crop_y', $viewport.observator.crop_position_y());
-              offsetLeft = (ui.position.left - $viewport.width() / 2) / scaleLeft
-              offsetTop = (ui.position.top  - $viewport.height() / 2) / scaleTop
+              offsetLeft = Math.round((ui.position.left - $viewport.width() / 2) / scaleLeft);
+              offsetTop = Math.round((ui.position.top  - $viewport.height() / 2) / scaleTop);
             }
           });
 
